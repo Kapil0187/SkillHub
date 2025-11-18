@@ -10,5 +10,9 @@ Rails.application.routes.draw do
   post '/login', to: 'authentication#login'
   post '/logout', to: 'authentication#logout'
   post '/refresh', to: 'authentication#refresh'
-  get '/user', to: 'users#show' 
+  get '/user', to: 'users#show'
+
+  namespace :admin do
+    resources :user, only: [:create]
+  end
 end
