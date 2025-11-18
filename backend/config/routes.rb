@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -8,5 +10,9 @@ Rails.application.routes.draw do
   post '/login', to: 'authentication#login'
   post '/logout', to: 'authentication#logout'
   post '/refresh', to: 'authentication#refresh'
-  get '/profile', to: 'profiles#show' 
+  get '/user', to: 'users#show'
+
+  namespace :admin do
+    resources :user, only: [:create]
+  end
 end
