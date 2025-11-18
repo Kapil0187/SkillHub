@@ -1,4 +1,4 @@
-class AuthenticationController < ApplicationController
+class AuthenticationController < ApiController
   # POST /signup
   def signup
     user = User.new(signup_params)

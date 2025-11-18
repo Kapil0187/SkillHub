@@ -3,5 +3,5 @@ class User < ApplicationRecord
   has_many :refresh_tokens, dependent: :destroy
   validates :email, presence: true, uniqueness: true
 
-  enum :role, { student: "student", creator: "creator", admin: "admin" }, default: "student"
+  enum :role, { student: "student", creator: "creator" }, default: "student"
 end
