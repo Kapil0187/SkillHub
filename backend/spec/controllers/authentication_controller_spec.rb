@@ -1,30 +1,31 @@
 require 'rails_helper'
 
 RSpec.describe "Authentication", type: :request do
-  let(:user) { create(:user, password: "password123", password_confirmation: "password123") }
+  let(:user) { create(:user, password: "password123", password_confirmation: "password123", role: 'student') }
   
   describe "POST /signup" do
-    let(:valid_attributes) { { email: 'test@gmail.com', password: 'password123', password_confirmation: 'password123' } }
-    let(:invalid_attributes) { { email: 'test@gmail.com', password: 'password123', password_confirmation: 'wrongconfirmation' } }
+      let(:valid_attributes) { { email: 'test@gmail.com', password: 'password123', password_confirmation: 'password123', role:'student' } }
+      let(:invalid_attributes) { { email: 'test@gmail.com', password: 'password123', password_confirmation: 'wrongconfirmation', role:'student' } }
 
-    it 'creates a new user with valid attributes' do
-      post '/singup', params: valid_attributes
+      it 'creates a new user with valid attributes' do
+        post '/signup', params: valid_attributes
 
-      expect(response).to  have_http_status(:created)
-      json = JSON.parse(response.body)
-      expect(json['access_token']).to be_present
-      expect(json['refresh_token']).to be_present
-      expect(json['user']['email']).to eq('test@gmail.com')
+        expect(response).to  have_http_status(201)
+        json = JSON.parse(response.body)
+        expect(json['access_token']).to be_present
+        expect(json['refresh_token']).to be_present
+        expect(json['user']['email']).to eq('test@gmail.com')
+        expect(json['user']['role']).to eq('student')
+      end
+
+      it 'returns errors with invalid attributes' do
+        post '/signup', params: invalid_attributes
+
+        expect(response).to have_http_status(422)
+        json = JSON.parse(response.body)
+        expect(json['errors']).to include("Password confirmation doesn't match Password")
+      end
     end
-
-    it 'returns errors with invalid attributes' do
-      post '/singup', params: invalid_attributes
-
-      expect(response).to have_http_status(:unprocessable_entity)
-      json = JSON.parse(response.body)
-      expect(json['errors']).to include("Password confirmation doesn't match Password")
-    end
-  end
 
   describe "POST /login" do
     it 'authenticates user with valid credentials' do
@@ -61,7 +62,7 @@ RSpec.describe "Authentication", type: :request do
     it 'returns error with invalid refresh token' do
       post '/logout', params: { refresh_token: 'invalidtoken' }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       json = JSON.parse(response.body)
       expect(json['error']).to eq('Invalid refresh token')
     end

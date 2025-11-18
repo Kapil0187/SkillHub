@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::API
+  include Pundit::Authorization 
   rescue_from JWT::DecodeError, with: :render_unauthorized
   rescue_from JWT::ExpiredSignature, with: :render_token_expired
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized  
 
   private
 
@@ -30,5 +32,9 @@ class ApplicationController < ActionController::API
 
   def render_token_expired
     render json: { error: 'TokenExpired', message: 'Access token expired' }, status: :unauthorized
+  end
+
+  def user_not_authorized
+    render json: { error: "Forbidden" }, status: :forbidden
   end
 end
