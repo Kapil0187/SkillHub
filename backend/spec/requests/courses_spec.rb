@@ -71,7 +71,7 @@ RSpec.describe "Courses", type: :request do
 
     it "returns errors with invalid attributes" do
       post '/courses', params: invalid_attributes, headers: creator_headers
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:unprocessable_content)
       json = JSON.parse(response.body)
       expect(json['title']).to include("can't be blank")
     end

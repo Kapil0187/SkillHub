@@ -19,7 +19,7 @@ class AuthenticationController < ApiController
       refresh_token = user.refresh_tokens.create!
       render json: { access_token: access_token, refresh_token: refresh_token.token, user: { id: user.id, email: user.email, role: user.role } }
     else
-      render json: { error: 'Invalid email/password' }, status: :unauthorized
+      render json: { error: "Invalid email/password" }, status: :unauthorized
     end
   end
 
@@ -29,9 +29,9 @@ class AuthenticationController < ApiController
     token = RefreshToken.find_by(token: token_str)
     if token
       token.destroy
-      render json: { message: 'Logged out successfully' }
+      render json: { message: "Logged out successfully" }
     else
-      render json: { error: 'Invalid refresh token' }, status: :unprocessable_entity
+      render json: { error: "Invalid refresh token" }, status: :unprocessable_entity
     end
   end
 
@@ -42,7 +42,7 @@ class AuthenticationController < ApiController
       access_token = JsonWebToken.encode(user_id: token.user.id)
       render json: { access_token: access_token }
     else
-      render json: { error: 'Invalid or expired refresh token' }, status: :unauthorized
+      render json: { error: "Invalid or expired refresh token" }, status: :unauthorized
     end
   end
 

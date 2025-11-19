@@ -1,5 +1,5 @@
 class ApiController < ActionController::API
-  include Pundit::Authorization 
+  include Pundit::Authorization
   include ErrorHandler
 
   private
@@ -8,7 +8,7 @@ class ApiController < ActionController::API
     token = token_from_header
     payload = JsonWebToken.decode(token)
     @current_user = User.find_by(id: payload[:user_id])
-    render json: { error: 'Not Authorized' }, status: :unauthorized unless @current_user
+    render json: { error: "Not Authorized" }, status: :unauthorized unless @current_user
   end
 
   def current_user
@@ -20,11 +20,11 @@ class ApiController < ActionController::API
   end
 
   def token_from_header
-    auth = request.headers['Authorization']
+    auth = request.headers["Authorization"]
     if auth.present? && auth[/\ABearer /i]
-      auth.split(' ').last
+      auth.split(" ").last
     else
-      raise JWT::DecodeError, 'Missing or malformed Authorization header'
+      raise JWT::DecodeError, "Missing or malformed Authorization header"
     end
   end
 end
