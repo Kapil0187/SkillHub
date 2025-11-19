@@ -5,7 +5,7 @@ class UserPolicy
     @user = user
     @record = record
   end
-  
+
   def create?
     user.admin?
   end

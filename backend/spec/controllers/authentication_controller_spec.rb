@@ -2,15 +2,15 @@ require 'rails_helper'
 
 RSpec.describe "Authentication", type: :request do
   let(:user) { create(:user, password: "password123", password_confirmation: "password123", role: 'student') }
-  
+
   describe "POST /signup" do
-      let(:valid_attributes) { { email: 'test@gmail.com', password: 'password123', password_confirmation: 'password123', role:'student' } }
-      let(:invalid_attributes) { { email: 'test@gmail.com', password: 'password123', password_confirmation: 'wrongconfirmation', role:'student' } }
+      let(:valid_attributes) { { email: 'test@gmail.com', password: 'password123', password_confirmation: 'password123', role: 'student' } }
+      let(:invalid_attributes) { { email: 'test@gmail.com', password: 'password123', password_confirmation: 'wrongconfirmation', role: 'student' } }
 
       it 'creates a new user with valid attributes' do
         post '/signup', params: valid_attributes
 
-        expect(response).to  have_http_status(201)
+        expect(response).to have_http_status(201)
         json = JSON.parse(response.body)
         expect(json['access_token']).to be_present
         expect(json['refresh_token']).to be_present

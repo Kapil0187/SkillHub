@@ -1,6 +1,6 @@
 class CoursesController < ApiController
-  before_action :authenticate_request!, only: [:create, :update, :destroy]
-  after_action :verify_authorized, except: [:index, :show]
+  before_action :authenticate_request!, only: [ :create, :update, :destroy ]
+  after_action :verify_authorized, except: [ :index, :show ]
 
   def index
     @courses = Course.all
@@ -19,7 +19,7 @@ class CoursesController < ApiController
   def create
     @course = current_user.courses.new(course_params)
     authorize @course
-    
+
     if @course.save
       render json: @course, status: :created
     else
@@ -43,7 +43,7 @@ class CoursesController < ApiController
     authorize @course
 
     if @course.destroy
-      head :no_content, message: 'Course deleted successfully', status: :ok
+      head :no_content, message: "Course deleted successfully", status: :ok
     else
       render json: @course.errors, status: :unprocessable_content
     end

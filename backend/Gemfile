@@ -37,21 +37,22 @@ gem "image_processing", "~> 1.2"
 
 gem "bcrypt", "~> 3.1.16"
 
-gem "jwt", "~> 2.6"   
+gem "jwt", "~> 2.6"
 
-gem 'dotenv-rails'
+gem "dotenv-rails"
 
-gem 'pundit', '~> 2.2'
+# Authorization library
+gem "pundit", "~> 2.2"
 
-gem 'activeadmin', '~> 3.4'
+# Admin interface
+gem "activeadmin", "~> 3.4"
+gem "devise", "~> 4.9"
+gem "sprockets-rails", "~> 3.4"
+gem "sassc-rails", "~> 2.1"
 
-gem 'devise', '~> 4.9'
+gem "rack-cors", require: "rack/cors"
 
-gem 'sprockets-rails', '~> 3.4'
-
-gem 'sassc-rails', '~> 2.1'
-
-gem 'rack-cors', require: 'rack/cors'
+gem "rubocop", "~> 1.81"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -65,10 +66,11 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+end
 
-  gem 'rspec-rails', '~> 6.0'
-
-  gem 'factory_bot_rails'
-
-  gem 'faker'
+group :test do
+  gem "simplecov", require: false
+  gem "rspec-rails", "~> 6.0"
+  gem "factory_bot_rails"
+  gem "faker"
 end

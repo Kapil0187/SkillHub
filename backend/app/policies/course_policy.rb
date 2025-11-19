@@ -8,7 +8,7 @@ class CoursePolicy < ApplicationPolicy
   end
 
   def create?
-    user.present? && user.role == 'creator'
+    user.present? && user.role == "creator"
   end
 
   def update?

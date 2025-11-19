@@ -1,5 +1,5 @@
 class JsonWebToken
-  ALGORITHM = 'HS256'.freeze
+  ALGORITHM = "HS256".freeze
 
   def self.secret
     Rails.application.credentials.dig(:jwt, :secret)
