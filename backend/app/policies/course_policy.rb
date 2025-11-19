@@ -18,12 +18,4 @@ class CoursePolicy < ApplicationPolicy
   def destroy?
     user.present? && record.user_id == user.id
   end
-
-  class Scope < ApplicationPolicy::Scope
-    if user.admin?
-      scope.all
-    else
-      scope.where(user_id: user.id)
-    end
-  end
 end
