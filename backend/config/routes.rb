@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :user, only: [:create]
   end
+
+  resources :courses, only: [:index, :show, :create, :update, :destroy]
 end

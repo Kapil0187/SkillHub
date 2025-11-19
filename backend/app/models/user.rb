@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
-  has_many :refresh_tokens, dependent: :destroy
   validates :email, presence: true, uniqueness: true
+  has_many :refresh_tokens, dependent: :destroy
+  has_many :courses, dependent: :destroy
 
   enum :role, { student: "student", creator: "creator" }, default: "student"
 
